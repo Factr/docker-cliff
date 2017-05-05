@@ -9,9 +9,9 @@ RUN git clone https://github.com/Berico-Technologies/CLAVIN /opt/CLAVIN --branch
 
 WORKDIR /opt/CLAVIN
 
-ADD http://download.geonames.org/export/dump/allCountries.zip allCountries.zip
-RUN unzip allCountries.zip
-RUN mvn compile
-RUN mkdir IndexDirectory
+RUN curl -O http://download.geonames.org/export/dump/allCountries.zip && unzip allCountries.zip
 
-CMD ["mvn", "exec:java", "-Dexec.mainClass=com.bericotech.clavin.index.IndexDirectoryBuilder"]
+RUN mvn dependency:go-offline
+RUN mvn compile
+
+CMD ["mvn", "exec:java", "-Dexec.mainClass=com.bericotech.clavin.index.IndexDirectoryBuilder", "-Dexec.args='-o /data/IndexDirectory'"]
