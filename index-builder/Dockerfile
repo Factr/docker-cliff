@@ -14,4 +14,4 @@ RUN curl -O http://download.geonames.org/export/dump/allCountries.zip && unzip a
 RUN mvn dependency:go-offline
 RUN mvn compile
 
-CMD ["mvn", "exec:java", "-Dexec.mainClass=com.bericotech.clavin.index.IndexDirectoryBuilder", "-Dexec.args='-o /data/IndexDirectory'"]
+CMD mvn exec:java -Dexec.mainClass=com.bericotech.clavin.index.IndexDirectoryBuilder -Dexec.args='-o /data/IndexDirectory -r'
